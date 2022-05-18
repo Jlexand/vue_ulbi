@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent>
         <h4>Создание поста</h4>
-        40 min
+        58 min
         <my-input 
             v-model="post.title"
             type="text" 
