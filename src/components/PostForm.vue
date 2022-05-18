@@ -2,23 +2,21 @@
     <form @submit.prevent>
         <h4>Создание поста</h4>
         40 min
-        <input 
+        <my-input 
             v-model="post.title"
-            class="input" 
             type="text" 
             placeholder="Название"
-        >
-        <input 
+        />
+        <my-input 
             v-model="post.body"
-            class="input" 
             type="text" 
             placeholder="Описание"
-        >
-        <button 
+        />
+        <my-button
             @click="createPost"
         >
-        Создать
-        </button>
+            Создать
+        </my-button>
     </form>
 </template>
 <script>
@@ -44,22 +42,8 @@ export default {
 }
 </script>
 <style>
-.input {
-    width: 100%;
-    border: 1px solid teal;
-    padding: 5px 10px;
-    margin: 5px;
-}
 form {
     display: flex;
     flex-direction: column;
-}
-button {
-    margin: 5px;
-    padding: 10px;
-    align-self: flex-end;
-    background: none;
-    color: teal;
-    border: 1px solid teal;
 }
 </style>
