@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent>
         <h4>Создание поста</h4>
-        40 min
+        35 min
         <input 
             v-model="post.title"
             class="input" 
@@ -14,9 +14,7 @@
             type="text" 
             placeholder="Описание"
         >
-        <button 
-            @click="createPost"
-        >
+        <button>
         Создать
         </button>
     </form>
