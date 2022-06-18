@@ -1,63 +1,47 @@
 <template>
     <form @submit.prevent>
         <h4>Создание поста</h4>
-        35 min
-        <input 
-            v-model="post.title"
-            class="input" 
-            type="text" 
+        50 min
+        <MyInput
+            v-model="newPost.title"
             placeholder="Название"
-        >
-        <input 
-            v-model="post.body"
-            class="input" 
-            type="text" 
+        />
+
+        <MyInput
+            v-model="newPost.body"
             placeholder="Описание"
-        >
-        <button>
+        />
+        <MyButton @click="pushPost">
         Создать
-        </button>
+        </MyButton>
     </form>
 </template>
 <script>
 export default {
-    data() {
-        return {
-            post: {
-                title: '',
-                body: '',
-            }
-        }
-    },
-    methods: {
-        createPost(e) {
-            this.post.id = Date.now();
-            this.$emit('create', this.post)
-            this.post = {
-                title: '',
-                body: '',
-            }
+   data() {
+    return {
+        newPost: {
+            title: '',
+            body: '',
         }
     }
+   },
+   methods: {
+    pushPost() {
+        this.newPost.id = Date.now()
+        this.$emit('create', this.newPost)
+        this.newPost = {
+            title: '',
+            body: '',
+            id: '',
+        }
+    }
+   },
 }
 </script>
 <style>
-.input {
-    width: 100%;
-    border: 1px solid teal;
-    padding: 5px 10px;
-    margin: 5px;
-}
 form {
     display: flex;
     flex-direction: column;
-}
-button {
-    margin: 5px;
-    padding: 10px;
-    align-self: flex-end;
-    background: none;
-    color: teal;
-    border: 1px solid teal;
 }
 </style>
