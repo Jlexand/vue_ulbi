@@ -4,11 +4,13 @@
         50 min
         <MyInput
             v-model="newPost.title"
+            type="text"
             placeholder="Название"
         />
 
         <MyInput
             v-model="newPost.body"
+            type="text"
             placeholder="Описание"
         />
         <MyButton @click="pushPost">

@@ -5,9 +5,6 @@
 <script>
 export default {
   name: "MyButton",
-  data() {
-    return {};
-  },
 };
 </script>
 
