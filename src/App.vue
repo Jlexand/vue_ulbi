@@ -1,9 +1,13 @@
 <template>
     <div class="app">
 		<PostForm @create="createPost"/>
-        <PostList :posts="posts"/>
+        <PostList @remove="removePost" v-if="posts.length > 0" :posts="posts"/>
+        <div v-else>
+            <span>
+                Посты отсутствуют(
+            </span>
+        </div>
     </div>
-
 </template>
 <script>
 	import PostForm from '@/components/PostForm.vue'
@@ -24,6 +28,9 @@
         methods: {
             createPost(post) {
                 this.posts.push(post)
+            },
+            removePost(post) {
+                this.posts =  this.posts.filter(p => p.id !== post.id)
             }
         },
     }

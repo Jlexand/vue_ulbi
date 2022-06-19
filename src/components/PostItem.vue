@@ -1,12 +1,12 @@
 <template>
-    <div class="post" :key="post.id">
+    <div class="post">
         <strong>
             {{ post.title }}
         </strong>
         <span>
             {{ post.body }}
         </span>
-        <MyButton>Удалить</MyButton>
+        <MyButton @click="$emit('remove', post)">Удалить</MyButton>
     </div>
 </template>
 <script>
