@@ -5,18 +5,24 @@
         <ModalWindow v-model:show="dialogVisible">
             <PostForm @create="createPost"/>
         </ModalWindow>
-        <PostList @remove="removePost" v-if="posts.length > 0" :posts="posts"/>
+        <div v-if="!isPostLoading">
+            <PostList @remove="removePost" v-if="posts.length > 0" :posts="posts"/>
+            <div v-else>
+                <span>
+                    Посты отсутствуют(
+                </span>
+            </div>
+        </div>
         <div v-else>
-            <span>
-                Посты отсутствуют(
-            </span>
+            Загрузка...
         </div>
     </div>
 </template>
 <script>
-	import PostForm from '@/components/PostForm.vue'
-    import PostList from '@/components/PostList.vue'
+import PostForm from '@/components/PostForm.vue'
+import PostList from '@/components/PostList.vue'
 import MyButton from './components/UI/MyButton.vue'
+import axios from 'axios'
     export default {
 		components: {
     PostForm,
@@ -25,11 +31,9 @@ import MyButton from './components/UI/MyButton.vue'
 },
         data() {
             return {
-                posts: [
-                    {id: 1, title: 'js 1', body: 'Описание 1' },
-                    {id: 2, title: 'js 2', body: 'Описание 2' },
-                ],
+                posts: [],
                 dialogVisible: false,
+                isPostLoading: false
             }
         },
         methods: {
@@ -42,8 +46,22 @@ import MyButton from './components/UI/MyButton.vue'
             },
             showDialog() {
                 this.dialogVisible = true
+            },
+            async fetchPosts() {
+                try{
+                    this.isPostLoading = true
+                        const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10')
+                        this.posts = response.data
+                } catch(e) {
+                    alert('ошибка')
+                } finally {
+                    this.isPostLoading = false
+                }
             }
         },
+        mounted() {
+            this.fetchPosts();
+        }
     }
 </script>
 <style>
