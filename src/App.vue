@@ -2,6 +2,10 @@
     <div class="app">
         <h1>Страница с постами 1:16 min</h1>
         <MyButton @click="showDialog">Создать пост</MyButton>
+        <MySelect 
+            v-model="selectedSort"
+            :options="sortOptions"
+        />
         <ModalWindow v-model:show="dialogVisible">
             <PostForm @create="createPost"/>
         </ModalWindow>
@@ -22,18 +26,25 @@
 import PostForm from '@/components/PostForm.vue'
 import PostList from '@/components/PostList.vue'
 import MyButton from './components/UI/MyButton.vue'
+import MySelect from './components/UI/MySelect.vue'
 import axios from 'axios'
     export default {
 		components: {
     PostForm,
     PostList,
-    MyButton
+    MyButton,
+    MySelect
 },
         data() {
             return {
                 posts: [],
                 dialogVisible: false,
-                isPostLoading: false
+                isPostLoading: false,
+                selectedSort: '',
+                sortOptions: [
+                    {value: 'title', name: 'По названию'},
+                    {value: 'body', name: 'По описанию'},
+                ],
             }
         },
         methods: {
