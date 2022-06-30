@@ -7,6 +7,7 @@
             :options="sortOptions"
         />
         <MyInput
+            v-focus
             v-model="searchQuery"
             placeholder="Поиск"
         />
@@ -24,7 +25,7 @@
         <div v-else>
             Загрузка...
         </div>
-        <div ref="observer" class="observer"></div>>
+        <div v-intersection="loadMorePosts" class="observer"></div>
         <!-- <div class="b-page-list">
             <span 
                 v-for="pageNumber in totalPages" 
@@ -121,18 +122,6 @@ import axios from 'axios'
         },
         mounted() {
             this.fetchPosts();
-            const options = {
-                rootMargin: '0px',
-                threshold: 1.0
-            }
-            const callback = (entries, observer) => {
-                if(entries[0].isIntersecting && this.page < this.totalPages) {
-                    console.log('1')
-                    this.loadMorePosts()
-                }
-            }
-            const observer = new IntersectionObserver(callback, options)
-            observer.observe(this.$refs.observer)
         },
         computed: {
             sortedPosts() {
