@@ -7,6 +7,9 @@
             <MyButton @click="$router.push('/posts')">
                 Посты
             </MyButton>
+            <MyButton @click="$router.push('/store')">
+                Посты Store
+            </MyButton>
             <MyButton @click="$router.push('/about')">
                 О нас
             </MyButton>
