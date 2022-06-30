@@ -24,6 +24,19 @@
         <div v-else>
             Загрузка...
         </div>
+        <div class="b-page-list">
+            <span 
+                v-for="pageNumber in totalPages" 
+                :key="pageNumber"
+                class="page-list__item"
+                :class="{
+                    'page-list__item--active': page === pageNumber
+                }"
+                @click="changePage(pageNumber)"
+            >
+                {{ pageNumber }}
+            </span>
+        </div>
     </div>
 </template>
 <script>
@@ -47,6 +60,9 @@ import axios from 'axios'
                 dialogVisible: false,
                 isPostLoading: false,
                 selectedSort: '',
+                page: 1,
+                limit: 10,
+                totalPages: 0,
                 sortOptions: [
                     {value: 'title', name: 'По названию'},
                     {value: 'body', name: 'По описанию'},
@@ -65,10 +81,19 @@ import axios from 'axios'
             showDialog() {
                 this.dialogVisible = true
             },
+            changePage(pageNumber) {
+                this.page = pageNumber
+            },
             async fetchPosts() {
                 try{
                     this.isPostLoading = true
-                        const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10')
+                        const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+                            params: {
+                                _page: this.page,
+                                _limit: this.limit,
+                            }
+                        })
+                        this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit)
                         this.posts = response.data
                 } catch(e) {
                     alert('ошибка')
@@ -91,11 +116,9 @@ import axios from 'axios'
             }
         },
         watch: {
-            // selectedSort(newValue) {
-            //     this.posts.sort((post1, post2)=>{
-            //         return post1[newValue]?.localeCompare(post2[newValue])
-            //     })
-            // },
+            page() {
+                this.fetchPosts();
+            }
         }
     }
 </script>
@@ -107,5 +130,19 @@ import axios from 'axios'
     }
     .app {
         padding: 20px;
+    }
+    .b-page-list {
+        margin-top: 20px;
+    }
+    .b-page-list .page-list__item {
+        box-sizing: border-box;
+        padding: 10px;
+        margin: 0 0px 10px;
+        border: 1px solid #4d4848;
+        font-size: 14px;
+        font-weight: 600;
+    }
+    .b-page-list .page-list__item--active {
+        border-color: aquamarine;
     }
 </style>
