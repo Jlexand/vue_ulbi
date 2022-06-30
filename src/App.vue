@@ -6,11 +6,15 @@
             v-model="selectedSort"
             :options="sortOptions"
         />
+        <MyInput
+            v-model="searchQuery"
+            placeholder="Поиск"
+        />
         <ModalWindow v-model:show="dialogVisible">
             <PostForm @create="createPost"/>
         </ModalWindow>
         <div v-if="!isPostLoading">
-            <PostList @remove="removePost" v-if="posts.length > 0" :posts="sortedPosts"/>
+            <PostList @remove="removePost" v-if="posts.length > 0" :posts="soertedAndSearchedPosts"/>
             <div v-else>
                 <span>
                     Посты отсутствуют(
@@ -27,13 +31,15 @@ import PostForm from '@/components/PostForm.vue'
 import PostList from '@/components/PostList.vue'
 import MyButton from './components/UI/MyButton.vue'
 import MySelect from './components/UI/MySelect.vue'
+import MyInput from './components/UI/MyInput.vue'
 import axios from 'axios'
     export default {
 		components: {
     PostForm,
     PostList,
     MyButton,
-    MySelect
+    MySelect,
+    MyInput
 },
         data() {
             return {
@@ -45,6 +51,7 @@ import axios from 'axios'
                     {value: 'title', name: 'По названию'},
                     {value: 'body', name: 'По описанию'},
                 ],
+                searchQuery: '',
             }
         },
         methods: {
@@ -78,6 +85,9 @@ import axios from 'axios'
                 return [...this.posts].sort((post1, post2)=>{
                     return post1[this.selectedSort]?.localeCompare(post2[this.selectedSort])
                 })
+            },
+            soertedAndSearchedPosts() {
+                return this.sortedPosts.filter(post => post.title.toLowerCase().includes(this.searchQuery.toLowerCase()))
             }
         },
         watch: {
