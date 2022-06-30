@@ -9,7 +9,10 @@
         <span>
             {{ post.body }}
         </span>
-        <MyButton @click="$emit('remove', post)">Удалить</MyButton>
+        <div>
+            <MyButton @click="$router.push(`/posts/${post.id}`)">Открыть</MyButton>
+            <MyButton @click="$emit('remove', post)">Удалить</MyButton>
+        </div>
     </div>
 </template>
 <script>
