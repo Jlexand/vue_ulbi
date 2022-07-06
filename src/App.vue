@@ -17,7 +17,8 @@
                     <input 
                         type="text" 
                         placeholder="Название" 
-                        :value="title" @input="upInput"
+                        :value="title"
+                        @input=" title = $event.target.value"
                     >
                     <input
                         type="text" 
@@ -61,9 +62,6 @@ export default {
         }
     },
     methods: {
-        upInput(event) {
-            this.title = event.target.value
-        },
         createPost() {
             const newPost = {
                 id: Date.now(),
