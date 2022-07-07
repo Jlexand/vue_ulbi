@@ -5,7 +5,7 @@
                 {{ post.title }}
             </div>
             <div class="post__btns">
-                <button>Удалить</button>
+                <MyButton>Удалить</MyButton>
             </div>
         </div>
         <div class="post__body">
@@ -14,6 +14,7 @@
     </div>
 </template>
 <script>
+
     export default {
         props: {
             post: {
